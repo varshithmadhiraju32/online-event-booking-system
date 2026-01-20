@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Successful | EventBook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="success-page">
+
+<!-- LOADING ANIMATION -->
+<div id="loader">
+    <div class="loader-circle"></div>
+    <p>Confirming your booking...</p>
+</div>
+
+<!-- SUCCESS CONTENT -->
+<div class="success-container hidden" id="successBox">
+
+    <div class="check-circle animate-check">✔</div>
+
+    <h1>Booking Successful!</h1>
+    <p class="sub-text">Your tickets have been booked successfully.</p>
+
+    <div class="ticket-box">
+        <p style="margin:0 0 8px 0;font-weight:700;font-size:18px;">{{ event_title }}</p>
+        <p style="margin:0 0 10px 0;font-weight:600;color:#888;">📍 {{ event_location }} • 📅 {{ event_date }}</p>
+
+        <p><strong>🎟 Ticket ID</strong></p>
+        <p class="ticket-id">{{ ticket_id }}</p>
+
+        <p style="margin-top:15px;"><strong>💰 Total Paid</strong></p>
+        <p class="total-amount">₹{{ total_price }}</p>
+    </div>
+
+    <a href="/home" class="btn-home">Back to Home</a>
+
+</div>
+
+<script>
+    // Show animation first, then success UI
+    setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("successBox").classList.remove("hidden");
+    }, 2000); // 2 seconds animation
+</script>
+
+</body>
+</html>

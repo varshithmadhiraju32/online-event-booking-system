@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Event Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-body">
+
+<div class="auth-card">
+    <h2 class="auth-title">Welcome Back 👋</h2>
+    <p class="auth-subtitle">
+        Login to continue booking your favorite events
+    </p>
+
+    <form method="POST">
+        <input
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit" class="btn-yellow full-width">
+            Login
+        </button>
+    </form>
+
+    <p class="auth-footer">
+        Don’t have an account?
+        <a href="/register">Create one</a>
+    </p>
+</div>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ event.title }} | EventBook</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">🎟 CineBook</div>
+    <a href="/home" class="nav-link">⬅ Back</a>
+</header>
+
+<!-- EVENT DETAILS -->
+<div class="detail-container">
+    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4" alt="Event Image">
+
+    <div class="detail-content">
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.description }}</p>
+
+        <div class="detail-info">
+            <span>📅 {{ event.date }}</span>
+            <span>📍 {{ event.location }}</span>
+        </div>
+
+        <form method="POST" action="/book/{{ event.id }}" onsubmit="return validateBooking()">
+
+            <!-- VIP -->
+            <label>
+                VIP (₹300)  
+                <span style="color:#aaa; font-size:13px;">
+                    | Remaining: {{ event.vip_seats }}
+                </span>
+            </label>
+            <input type="number"
+                   name="vip"
+                   min="0"
+                   max="{{ event.vip_seats }}"
+                   value="0"
+                   oninput="calc()"
+                   {% if event.vip_seats == 0 %} disabled {% endif %}>
+
+            <!-- VVIP -->
+            <label>
+                VVIP (₹500)  
+                <span style="color:#aaa; font-size:13px;">
+                    | Remaining: {{ event.vvip_seats }}
+                </span>
+            </label>
+            <input type="number"
+                   name="vvip"
+                   min="0"
+                   max="{{ event.vvip_seats }}"
+                   value="0"
+                   oninput="calc()"
+                   {% if event.vvip_seats == 0 %} disabled {% endif %}>
+
+            <!-- MIP -->
+            <label>
+                MIP (₹700)  
+                <span style="color:#aaa; font-size:13px;">
+                    | Remaining: {{ event.mip_seats }}
+                </span>
+            </label>
+            <input type="number"
+                   name="mip"
+                   min="0"
+                   max="{{ event.mip_seats }}"
+                   value="0"
+                   oninput="calc()"
+                   {% if event.mip_seats == 0 %} disabled {% endif %}>
+
+            <!-- CELEBRITY -->
+            <label>
+                Celebrity (₹1000)  
+                <span style="color:#aaa; font-size:13px;">
+                    | Remaining: {{ event.celebrity_seats }}
+                </span>
+            </label>
+            <input type="number"
+                   name="celebrity"
+                   min="0"
+                   max="{{ event.celebrity_seats }}"
+                   value="0"
+                   oninput="calc()"
+                   {% if event.celebrity_seats == 0 %} disabled {% endif %}>
+
+            <!-- TOTAL -->
+            <p style="margin-top:15px;color:#facc15;font-size:18px;">
+                💰 Total: ₹<span id="total">0</span>
+            </p>
+
+            <p id="error" style="color:#ff4d4f;display:none;margin-top:8px;font-weight:600;"></p>
+
+            <!-- BOOK BUTTON -->
+            {% if event.vip_seats == 0
+                  and event.vvip_seats == 0
+                  and event.mip_seats == 0
+                  and event.celebrity_seats == 0 %}
+                <button class="book-btn" disabled style="opacity:0.5;">
+                    ❌ Sold Out
+                </button>
+            {% else %}
+                <button class="book-btn">
+                    Book Tickets
+                </button>
+            {% endif %}
+
+        </form>
+    </div>
+</div>
+
+<!-- PRICE CALCULATION -->
+<script>
+function calc(){
+    const vip = +document.querySelector('[name=vip]').value;
+    const vvip = +document.querySelector('[name=vvip]').value;
+    const mip = +document.querySelector('[name=mip]').value;
+    const c = +document.querySelector('[name=celebrity]').value;
+
+    document.getElementById("total").innerText =
+        vip*300 + vvip*500 + mip*700 + c*1000;
+
+    const errEl = document.getElementById('error');
+    if (errEl) errEl.style.display = 'none';
+}
+
+function validateBooking(){
+    const vip = +document.querySelector('[name=vip]').value;
+    const vvip = +document.querySelector('[name=vvip]').value;
+    const mip = +document.querySelector('[name=mip]').value;
+    const c = +document.querySelector('[name=celebrity]').value;
+
+    const totalQty = vip + vvip + mip + c;
+    const errEl = document.getElementById('error');
+
+    if (totalQty < 1){
+        if (errEl){
+            errEl.innerText = '❌ Please select at least one ticket before booking.';
+            errEl.style.display = 'block';
+        } else {
+            alert('Please select at least one ticket before booking.');
+        }
+        return false;
+    }
+
+    if (errEl) errEl.style.display = 'none';
+    return true;
+}
+</script>
+
+</body>
+</html>

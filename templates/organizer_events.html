@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organizer Dashboard | CineBook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="logo">
+        EventBook <span class="admin-badge">Organizer</span>
+    </div>
+
+    <nav class="nav">
+        <a href="/home" class="nav-link">Home</a>
+        <a href="/logout" class="nav-link logout">Logout</a>
+    </nav>
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+<section class="movies">
+
+    <!-- ================= ADD EVENT ================= -->
+    <h2 style="margin-bottom:15px;">➕ Add New Event</h2>
+
+    <form action="/organizer/events/add" method="POST" class="admin-form">
+
+        <input type="text" name="title" placeholder="Event Title" required>
+        <textarea name="description" placeholder="Description" required></textarea>
+
+        <input type="date" name="date" required>
+        <input type="text" name="location" placeholder="Location" required>
+
+        <h3>VIP</h3>
+        <input type="number" name="vip_price" placeholder="Price" required>
+        <input type="number" name="vip_seats" placeholder="Seats" required>
+
+        <h3>VVIP</h3>
+        <input type="number" name="vvip_price" placeholder="Price" required>
+        <input type="number" name="vvip_seats" placeholder="Seats" required>
+
+        <h3>MIP</h3>
+        <input type="number" name="mip_price" placeholder="Price" required>
+        <input type="number" name="mip_seats" placeholder="Seats" required>
+
+        <h3>Celebrity</h3>
+        <input type="number" name="celebrity_price" placeholder="Price" required>
+        <input type="number" name="celebrity_seats" placeholder="Seats" required>
+
+        <button class="btn-yellow full-width">Add Event</button>
+    </form>
+
+    <hr style="margin:40px 0; border:1px solid #222;">
+
+    <!-- ================= MY EVENTS ================= -->
+    <h2>📅 My Events</h2>
+
+    {% if events %}
+    <div class="movie-grid">
+
+        {% for e in events %}
+        <div class="movie-card">
+
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4" alt="Event Image">
+
+            <div class="movie-title">{{ e[1] }}</div>
+
+            <p style="padding:10px; color:#aaa;">
+                📅 {{ e[2] }} <br>
+                📍 {{ e[3] }}
+            </p>
+
+            <div style="display:flex; gap:10px; padding:10px;">
+
+                <!-- EDIT EVENT -->
+                <a href="/organizer/events/edit/{{ e[0] }}"
+                   class="btn-yellow"
+                   style="flex:1; text-align:center;">
+                    Edit
+                </a>
+
+                <!-- DELETE EVENT -->
+                <a href="/organizer/events/delete/{{ e[0] }}"
+                   class="btn-yellow"
+                   style="flex:1; text-align:center;"
+                   onclick="return confirm('Delete this event?');">
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+        <p style="color:#aaa; margin-top:20px;">No events created yet.</p>
+    {% endif %}
+
+</section>
+
+</body>
+</html>

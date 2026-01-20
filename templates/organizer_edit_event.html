@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event | Organizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        EventBook <span class="admin-badge">Organizer</span>
+    </div>
+    <nav class="nav">
+        <a href="/organizer/events" class="nav-link">Back</a>
+        <a href="/logout" class="nav-link logout">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h2>Edit Event</h2>
+
+    <form method="POST" class="event-form">
+
+        <!-- EVENT TITLE -->
+        <label>Event Title</label>
+        <input type="text" name="title" value="{{ event[1] }}" required>
+
+        <!-- DESCRIPTION -->
+        
+        <label>Description</label>
+        <textarea name="description" required>{{ event[2] }}</textarea>
+
+        <!-- DATE & LOCATION -->
+        <div class="row">
+            <div>
+                <label>Date</label>
+                <input type="date" name="date" value="{{ event[3] }}" required>
+            </div>
+            <div>
+                <label>Location</label>
+                <input type="text" name="location" value="{{ event[4] }}" required>
+            </div>
+        </div>
+
+        <!-- VIP -->
+        <h3>VIP</h3>
+        <div class="row">
+            <div>
+                <label>Price</label>
+                <input type="number" name="vip_price" value="{{ event[5] }}" required>
+            </div>
+            <div>
+                <label>Seats</label>
+                <input type="number" name="vip_seats" value="{{ event[9] }}" required>
+            </div>
+        </div>
+
+        <!-- VVIP -->
+        <h3>VVIP</h3>
+        <div class="row">
+            <div>
+                <label>Price</label>
+                <input type="number" name="vvip_price" value="{{ event[6] }}" required>
+            </div>
+            <div>
+                <label>Seats</label>
+                <input type="number" name="vvip_seats" value="{{ event[10] }}" required>
+            </div>
+        </div>
+
+        <!-- MIP -->
+        <h3>MIP</h3>
+        <div class="row">
+            <div>
+                <label>Price</label>
+                <input type="number" name="mip_price" value="{{ event[7] }}" required>
+            </div>
+            <div>
+                <label>Seats</label>
+                <input type="number" name="mip_seats" value="{{ event[11] }}" required>
+            </div>
+        </div>
+
+        <!-- CELEBRITY -->
+        <h3>Celebrity</h3>
+        <div class="row">
+            <div>
+                <label>Price</label>
+                <input type="number" name="celebrity_price" value="{{ event[8] }}" required>
+            </div>
+            <div>
+                <label>Seats</label>
+                <input type="number" name="celebrity_seats" value="{{ event[12] }}" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-yellow">Update Event</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

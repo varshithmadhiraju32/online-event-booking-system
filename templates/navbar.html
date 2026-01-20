@@ -1,0 +1,45 @@
+<header class="header">
+    <!-- LOGO -->
+    <div class="logo">🎬 EventBook</div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+
+        <!-- EVENTS -->
+        <a href="/home" class="nav-item btn-yellow">Events</a>
+
+        <!-- ORGANIZER DASHBOARD -->
+        {% if role == 'organizer' %}
+            <a href="/organizer/events" class="nav-item">Organizer</a>
+        {% endif %}
+
+        <!-- ADMIN DASHBOARD -->
+        {% if role == 'admin' %}
+            <a href="/admin/events" class="nav-item admin-item">Admin</a>
+        {% endif %}
+
+        <!-- PROFILE DROPDOWN (CLICK BASED) -->
+        <div class="profile" onclick="toggleDropdown(event)">
+            👤
+            <div class="dropdown">
+                <p class="username">{{ session['name'] }}</p>
+                <a href="/my-bookings">My Bookings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+<!-- DROPDOWN SCRIPT -->
+<script>
+function toggleDropdown(event) {
+    event.stopPropagation();
+    document.querySelector(".dropdown").classList.toggle("show");
+}
+
+document.addEventListener("click", function () {
+    const dropdown = document.querySelector(".dropdown");
+    if (dropdown) dropdown.classList.remove("show");
+});
+</script>

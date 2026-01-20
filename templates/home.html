@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CineBook | Events</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="logo">EventBook</div>
+
+    <nav class="nav">
+        <a href="/home" class="btn-yellow">Events</a>
+
+        {% if role == 'admin' %}
+            <a href="/admin/events" class="nav-link">Admin</a>
+        {% endif %}
+
+        {% if role == 'organizer' %}
+            <a href="/organizer/events" class="nav-link">Organizer</a>
+        {% endif %}
+
+        <div class="profile" onclick="toggleDropdown(event)">
+            👤
+            <div class="dropdown">
+                <p class="username">{{ session['name'] }}</p>
+                <a href="/my-bookings">My Bookings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <span class="badge">✨ Upcoming Events</span>
+    <h1>Book Your <span>Event Tickets</span></h1>
+    <p>Discover and book exciting live events</p>
+</section>
+
+<!-- ================= EVENTS ================= -->
+<section class="movies">
+
+    <div class="movies-header">
+        <h2>Featured Events</h2>
+        <span class="event-count">{{ events|length }} events available</span>
+    </div>
+
+    <div class="movie-grid">
+        {% for e in events %}
+        <div class="movie-card">
+
+            <div class="movie-image">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
+            </div>
+
+            <div class="movie-content">
+                <h3 class="movie-title">{{ e.title }}</h3>
+
+                <div class="movie-meta">
+                    <span>📅 {{ e.date }}</span>
+                    <span>📍 {{ e.location }}</span>
+                </div>
+
+                <div class="movie-footer">
+                    <div class="price">
+                        Starting from ₹{{ e.starting_price }}
+                    </div>
+
+                    <a href="/event/{{ e.id }}" class="btn-yellow">
+                        View Details
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================= DROPDOWN SCRIPT ================= -->
+<script>
+function toggleDropdown(e){
+    e.stopPropagation();
+    document.querySelector(".dropdown").classList.toggle("show");
+}
+document.addEventListener("click",()=>{
+    document.querySelector(".dropdown")?.classList.remove("show");
+});
+</script>
+
+</body>
+</html>

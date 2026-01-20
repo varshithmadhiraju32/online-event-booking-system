@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">EventBook <span class="admin-badge">Admin</span></div>
+
+    <nav class="nav">
+        <a href="/admin/dashboard" class="nav-link">Dashboard</a>
+        <a href="/admin/events" class="nav-link">Manage Events</a>
+        <a href="/admin/users" class="btn-yellow">Manage Users</a>
+        <a href="/logout" class="nav-link logout">Logout</a>
+    </nav>
+</header>
+
+<!-- USERS TABLE -->
+<section class="movies">
+    <h2>All Users</h2>
+
+    <table style="width:100%; color:white; border-collapse:collapse;">
+        <thead>
+            <tr style="border-bottom:1px solid #333;">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Change Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for u in users %}
+            <tr style="border-bottom:1px solid #222;">
+                <td>{{ u[1] }}</td>
+                <td>{{ u[2] }}</td>
+                <td><strong>{{ u[3] }}</strong></td>
+
+                <!-- CHANGE ROLE -->
+                <td>
+                    <form method="POST" action="/admin/users/role/{{ u[0] }}">
+                        <select name="role">
+                            <option value="user" {% if u[3]=='user' %}selected{% endif %}>User</option>
+                            <option value="organizer" {% if u[3]=='organizer' %}selected{% endif %}>Organizer</option>
+                            <option value="admin" {% if u[3]=='admin' %}selected{% endif %}>Admin</option>
+                        </select>
+                        <button type="submit" class="btn-yellow">Update</button>
+                    </form>
+                </td>
+
+                <!-- DELETE -->
+                <td>
+                    {% if u[3] != 'admin' %}
+                    <a href="/admin/users/delete/{{ u[0] }}"
+                       class="btn-yellow"
+                       onclick="return confirm('Delete this user?')">
+                        Delete
+                    </a>
+                    {% else %}
+                    —
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>
