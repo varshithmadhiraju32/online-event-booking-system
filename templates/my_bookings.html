@@ -27,38 +27,40 @@
             <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4"
      alt="Event Image">
             <!-- EVENT TITLE -->
-            <div class="movie-title">
-                {{ b[1] }}
-            </div>
+    <div class="movie-title">
+        🎟 {{ b.event_title }}
+    </div>
 
-            <!-- TICKET ID -->
-            <p>🎟 Ticket ID: <b>{{ b[0] }}</b></p>
+    <!-- TICKET ID -->
+    <p>🆔 Ticket ID: <b>{{ b.ticket_id }}</b></p>
 
-            <!-- EVENT DATE & LOCATION -->
-            <p>📅 {{ b[9] }}</p>
-            <p>📍 {{ b[2] }}</p>
+    <!-- LOCATION -->
+    <p>📍 {{ b.event_location }}</p>
 
-            <!-- SEATS -->
-            <p class="booking-info">
-                VIP: {{ b[4] }} |
-                VVIP: {{ b[5] }} |
-                MIP: {{ b[6] }} |
-                Celebrity: {{ b[7] }}
-            </p>
+    <!-- DATE -->
+    <p>📅 {{ b.event_date }}</p>
 
-            <!-- PRICE -->
-            <p class="booking-price">
-                💰 ₹{{ b[8] }}
-            </p>
+    <!-- SEATS -->
+    <p>
+        VIP: {{ b.vip_qty }} |
+        VVIP: {{ b.vvip_qty }} |
+        MIP: {{ b.mip_qty }} |
+        Celebrity: {{ b.celebrity_qty }}
+    </p>
 
-            <!-- CANCEL BUTTON -->
-            <a href="/cancel-booking/{{ b[0] }}"
-               class="btn-yellow cancel-btn"
-               onclick="return confirm('Cancel this ticket? Seats will be restored.')">
-                Cancel Ticket
-            </a>
+    <!-- PRICE -->
+    <p class="booking-price">
+        💰 ₹{{ b.total_price }}
+    </p>
 
-        </div>
+    <!-- CANCEL -->
+    <a href="/cancel-booking/{{ b.ticket_id }}"
+       class="btn-yellow cancel-btn"
+       onclick="return confirm('Cancel this ticket?');">
+        Cancel Ticket
+    </a>
+
+</div>
         {% endfor %}
 
     </div>
